@@ -13,7 +13,7 @@ However, if you want to run it on a local server here are the steps:
 
 To depoloy to cloud:
 
-    1. gcloud app deply will install the code to your own version of the app engine.
+    1. gcloud app deploy will install the code to your own version of the app engine.
 
 To test locally:
 
