@@ -1,7 +1,7 @@
 # multiuserblog
 Udacity Full Stack Developer Nanodegree - Project 3: Multi User Blog
 
-This application is hosted at the following link:
+    This application is hosted at the following link:
 
 However, if you want to run it on a local server here are the steps:
 
