@@ -1,0 +1,22 @@
+<div class="post">
+  <div class="post-heading">
+    <div class="post-title">
+      {{p.subject}}
+    </div>
+
+    <div class="post-date">
+	  {{p.user}} -- 
+	  <a class="login-link" href="/blog/like/{{p.key().id()}}" >likes( {{p.likes}} ) </a>--
+      {{p.created.strftime("%b %d, %Y")}}
+    </div>
+  </div>
+
+  <div class="post-content">
+    {{p._render_text | safe}}
+  </div>
+	  <a class="post-link" href="/blog/editpost/{{p.key().id()}}">Edit</a>
+	  <span class="post-link">|</span>
+      <a class="post-link" href="/blog/deletepost/{{p.key().id()}}">Delete</a>
+	  <span class="post-link">|</span>
+      <a class="post-link" href="/blog/commentpost/{{p.key().id()}}">Comment</a>
+</div>

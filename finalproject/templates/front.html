@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  {% for p in posts %}
+    {{ p.render() | safe }}
+    <br><br>
+	<hr>
+	<div class = "commenting">
+	{% for cs in comments %}
+           {%  if cs.post_reference == p.subject     %}
+			 <strong>{{cs.user}}: </strong> {{cs.content}}
+			 <span class="commentstyle"> ......    <a href="/blog/deletecomment/{{cs.key().id()}}">Delete</a> 
+			 | <a href="/blog/editcomment/{{cs.key().id()}}">Edit</a></span>
+			 <br>
+		   {% endif %}
+	{% endfor %}
+	</div>
+	<br><br>
+  {% endfor %}
+{% endblock %}
