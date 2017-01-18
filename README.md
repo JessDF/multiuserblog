@@ -3,8 +3,8 @@ Udacity Full Stack Developer Nanodegree - Project 3: Multi User Blog
 
     This application is hosted at the following link: https://finaludacity-155121.appspot.com/
     
-    Application will redirct you to a sign up page - if you don't want to sign up and wish to only view the blog go to this link:
-    https://finaludacity-155121.appspot.com/blog
+    Application will redirct you to a sign up page - if you don't want to sign up and wish to 
+    only view the blog go to this link:  https://finaludacity-155121.appspot.com/blog
 
 However, if you want to run it on a local server here are the steps:
 
