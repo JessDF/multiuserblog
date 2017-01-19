@@ -310,10 +310,14 @@ class DeletePost(BlogHandler):
 # Actual handler for Commenting on posts, uses class Comment to store
 class CommentPost(BlogHandler):
 	def get(self, post_id):
-		if not self.user:
-			return self.redirect('/blog')
+	#Was suggested to use a Python decorator for authentification, was unable to get it to work
 		key = db.Key.from_path('Post', int(post_id), parent=blog_key())
 		post = db.get(key)
+		if not post:
+			self.error(404)
+			return
+		if not self.user:
+			return self.redirect('/blog')
 		if self.user:
 			self.render("comment-post.html", subject=post.subject)
 		else:
