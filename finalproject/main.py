@@ -223,13 +223,13 @@ class PostPage(BlogHandler):
 class NewPost(BlogHandler):
 	def get(self):
 		if self.user:
-			self.render("newpost.html")
+			return self.render("newpost.html")
 		else:
-			self.redirect("/login")
+			return self.redirect("/login")
 
 	def post(self):
 		if not self.user:
-			self.redirect('/blog')
+			return self.redirect('/blog')
 
 		subject = self.request.get('subject')
 		content = self.request.get('content')
@@ -257,10 +257,10 @@ class EditPost(BlogHandler):
 				content = post.content
 				user = self.user.name
 				self.render('newpost.html', subject=subject, user = user, content=content, post_id=post_id, task="edit")
-			if self.user.name != post.user:
-				self.redirect('/blog')
+			else:
+				return self.redirect('/blog')
 		else:
-			self.redirect("/login")
+			return self.redirect("/login")
 	def post(self, post_id):
 		key = db.Key.from_path('Post', int(post_id), parent=blog_key())
 		post = db.get(key)
@@ -274,11 +274,14 @@ class EditPost(BlogHandler):
 		content = self.request.get('content')
 		user = self.user.name
 		if subject and content:
-			post.subject = subject
-			post.content = content
-			post.user = user
-			post.put()
-			self.redirect('/blog/%s' % str(post.key().id()))
+			if self.user.name == post.user:
+				post.subject = subject
+				post.content = content
+				post.user = user
+				post.put()
+				self.redirect('/blog/%s' % str(post.key().id()))
+			else:
+				return self.redirect('/blog')
 		else:
 			error = "Ensure both fields are filled out"
 			self.render('newpost.html', subject=subject, content=content, error=error)
@@ -335,7 +338,7 @@ class CommentPost(BlogHandler):
 class DeleteComment(BlogHandler):
 	def get(self, comment_id):
 		if comment_id == "":
-			self.redirect("/")
+			return self.redirect("/")
 		key = db.Key.from_path('Comment', int(comment_id), parent=blog_key())
 		comment = db.get(key)
 		if not comment:
@@ -358,8 +361,10 @@ class DeleteComment(BlogHandler):
 		self.redirect('/')
 
 class EditComment(BlogHandler):
-	def get(self, post_id):
-		key = db.Key.from_path('Comment', int(post_id), parent=blog_key())
+	def get(self, comment_id):
+		if comment_id == "":
+			return self.redirect("/")
+		key = db.Key.from_path('Comment', int(comment_id), parent=blog_key())
 		comment = db.get(key)
 		if not comment:
 			self.error(404)
@@ -368,7 +373,7 @@ class EditComment(BlogHandler):
 			if self.user.name == comment.user:
 				content = comment.content
 				user = self.user
-				self.render('comment-post.html', content=content, post_id=post_id, task="edit")
+				self.render('comment-post.html', content=content, comment_id=comment_id, task="edit")
 			else:
 				self.redirect('/blog')
 		else:
